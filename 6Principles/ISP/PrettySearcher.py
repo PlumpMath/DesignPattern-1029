@@ -8,27 +8,23 @@ import re, sys, os, traceback, signal
 
 from abc import ABCMeta, abstractmethod
 
-class IPrettyGirl(object):
-    '''
-    Abstract pretty girl
-    '''
-    __metaclass__ = ABCMeta
 
-    @abstractmethod
-    def goodLooking(self):
+
+class IGreatTemperamentGirl(object):
+    '''
+    Interface of great temperament girl
+    '''
+    def __init__(self, name):
+        self._name = name
         pass
 
-    @abstractmethod
-    def niceFigure(self):
-        pass
-
-    @abstractmethod
     def greatTemperament(self):
+        print "%s---temperament is great" % self._name
         pass
 
-class PrettyGirl(IPrettyGirl):
+class IGoodBodyGirl():
     '''
-    Implement the pretty girl
+    Interface of good body girl
     '''
     def __init__(self, name):
         self._name = name
@@ -38,13 +34,18 @@ class PrettyGirl(IPrettyGirl):
         print "%s---face is beautiful" % self._name
         pass
 
-    def greatTemperament(self):
-        print "%s---temperament is great" % self._name
-        pass
-
     def niceFigure(self):
         print "%s---figure is very nice" % self._name
         pass
+
+class PrettyGirl(IGreatTemperamentGirl, IGoodBodyGirl):
+    '''
+    Implement of pretty girl
+    '''
+    def __init__(self, name):
+        super(PrettyGirl, self).__init__(name)
+        pass
+
 
 class AbstractSearcher(object):
     '''
