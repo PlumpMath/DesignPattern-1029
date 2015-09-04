@@ -55,15 +55,37 @@ class OffNovelBook(NovelBook):
 
         return offPrice
 
+class IComputerBook(IBook):
+    '''
+    Abstract class IComputerBook
+    '''
+    def __init__(self, name, price, author, scope):
+        super(IComputerBook, self).__init__(name, price, author)
+        self._scope = scope
+        pass
+
+    def getScope(self):
+        return self._scope
+
+class ComputerBook(IComputerBook):
+    '''
+    Implement of ComputerBook
+    '''
+    def __init__(self, name, price, author, scope):
+        super(ComputerBook, self).__init__(name, price, author, scope)
+        pass
+
 
 class BookStore(object):
     '''
     Book store
     '''
     bookList = []
+    bookList.append(NovelBook("Wei Chen", 4000, "Qian Zhongshu"))
     bookList.append(OffNovelBook("Dragon Oath", 3200, "JinYong"))
     bookList.append(OffNovelBook("Notre Dame de Paris", 5600, "Hugo"))
     bookList.append(OffNovelBook("The Golden Lotus", 4300, "Lanling Xiaoxiao Sheng"))
+    bookList.append(ComputerBook("Think in Java", 4300, "Bruce Eckel", "Program Language"))
 
     def __init__(self):
         pass
@@ -83,6 +105,9 @@ def register_signal() :
 def main() :
     register_signal()
 
+    print "----------------------------------------------------------------------"
+    print "           Books sold from the book store as following:"
+    print "----------------------------------------------------------------------"
     for book in BookStore.getBookList():
         print "Book Name:%s" % book.getName()
         print "Author   :%s" % book.getAuthor()
