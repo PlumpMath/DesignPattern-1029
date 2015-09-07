@@ -70,6 +70,21 @@ class WhiteHuman(Human):
         print "WhiteHuman can speak, normally single byte."
         pass
 
+class BrownHuman(Human):
+    '''
+    Brown human
+    '''
+    def __init__(self):
+        super(BrownHuman, self).__init__()
+        pass
+
+    def getColor(self):
+        print "The color of BrownHuman is Brown!"
+        pass
+
+    def speak(self):
+        print "BrownHuman can speak, normally single byte."
+        pass
 
 class AbstractHumanFactory(object):
     '''
@@ -121,7 +136,12 @@ def main() :
     human.getColor()
     human.speak()
 
-    print "\n--Third group is yellow human--"
+    print "\n--Third group is brown human--"
+    human = yinYangLu.createHuman(BrownHuman)
+    human.getColor()
+    human.speak()
+
+    print "\n--Fourth group is yellow human--"
     human = yinYangLu.createHuman(YellowHuman)
     human.getColor()
     human.speak()
