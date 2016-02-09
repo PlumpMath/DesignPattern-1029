@@ -31,10 +31,14 @@ class HummerModel(object):
     def engineBoom(self):
         pass
 
+    def isAlarm(self):
+        return True
+
     def run(self):
         self.start()
         self.engineBoom()
-        self.alarm()
+        if self.isAlarm():
+            self.alarm()
         self.stop()
 
 class HummerH1Model(HummerModel):
@@ -43,6 +47,7 @@ class HummerH1Model(HummerModel):
     '''
     def __init__(self):
         super(HummerH1Model, self).__init__()
+        self._isAlarm = True
 
     def start(self):
         print "Hummer H1 start..."
@@ -55,6 +60,12 @@ class HummerH1Model(HummerModel):
 
     def engineBoom(self):
         print "Hummer H1 engine bomm..."
+
+    def setAlarm(self, isAlarm):
+        self._isAlarm = isAlarm
+
+    def isAlarm(self):
+        return self._isAlarm
 
 class HummerH2Model(HummerModel):
     '''
@@ -75,6 +86,8 @@ class HummerH2Model(HummerModel):
     def engineBoom(self):
         print "Hummer H2 engine bomm..."
 
+    def isAlarm(self):
+        return False
 
 def onsignal_int(signum, frame) :
     print ("\nReceive SIGINT[Ctrl+C] to stop process by force !")
@@ -86,9 +99,18 @@ def register_signal() :
 def main() :
     register_signal()
 
+    print "------- Hummer H1 Model -------"
     hummer = HummerH1Model()
+    prompt = "Hummer H1 require bell or not? [Y/n] "
+    text = raw_input(prompt)
+    input = text.strip().upper()[0]
+    if input == 'Y':
+        hummer.setAlarm(True)
+    else:
+        hummer.setAlarm(False)
     hummer.run()
 
+    print "------- Hummer H2 Model -------"
     hummer = HummerH2Model()
     hummer.run()
 
