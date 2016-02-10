@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 '''
-Created on 2015/08/15
+Created on 2016/02/10
 
 @author: eyotang
 '''
 import re, sys, os, traceback, signal
 
+from abc import ABCMeta, abstractmethod
 
 
 
