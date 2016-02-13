@@ -32,7 +32,9 @@ class GamePlayer(IGamePlayer):
     '''
     Game Player Implementer
     '''
-    def __init__(self, name):
+    def __init__(self, gamePlayer, name):
+        if gamePlayer == None:
+            raise Exception("Can't create real role!")
         self._name = name
         super(GamePlayer, self).__init__()
 
@@ -50,8 +52,13 @@ class GamePlayerProxy(IGamePlayer):
     '''
     Game Player Proxy
     '''
-    def __init__(self, gamePlayer):
-        self._gamePlayer = gamePlayer
+    def __init__(self, name):
+        self._gamePlayer = None
+        try :
+            self._gamePlayer = GamePlayer(self, name)
+        except Exception as e :
+            print "Create game player failed for name %s!" % name
+            raise e
         super(GamePlayerProxy, self).__init__()
 
     def login(self, user, password):
@@ -75,8 +82,7 @@ def register_signal() :
 def main() :
     register_signal()
 
-    player = GamePlayer("eyotang")
-    proxy = GamePlayerProxy(player)
+    proxy = GamePlayerProxy("eyotang")
     print "start time: " + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     proxy.login("admin", "Admin123")
     proxy.killBoss()
