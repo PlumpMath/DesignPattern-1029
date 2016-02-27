@@ -8,7 +8,7 @@ import re, sys, os, traceback, signal
 
 from abc import ABCMeta, abstractmethod
 
-import string, random
+import string, random, copy
 
 def getRandString(num):
     ret = "".join(random.choice(string.ascii_letters) for x in range(num))
@@ -41,6 +41,9 @@ class Mail(object):
         self._appellation = ""
         self._context     = advTemplate.getAdvContext()
         self._tail        = ""
+
+    def clone(self):
+        return copy.deepcopy(self)
 
     def getReceiver(self):
         return self._receiver
@@ -87,9 +90,10 @@ def main() :
     mail = Mail(AdvTemplate())
     mail.setTail("XXX Bank copyright")
     for i in range(MAX_COUNT):
-        mail.setAppellation(getRandString(5) + "Gentlemen(Lady)")
-        mail.setReceiver(getRandString(5) + "@" + getRandString(8) + ".com")
-        sendMail(mail)
+        cloneMail = mail.clone()
+        cloneMail.setAppellation(getRandString(5) + "Gentlemen(Lady)")
+        cloneMail.setReceiver(getRandString(5) + "@" + getRandString(8) + ".com")
+        sendMail(cloneMail)
 
     return 0
 
