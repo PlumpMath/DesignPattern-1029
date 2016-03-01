@@ -41,10 +41,14 @@ class Mediator(AbstractMediator):
 
     def _buyComputer(self, num):
         saleStatus = self._sale.getSaleStatus();
+        realNum = 0
         if saleStatus > 80:
-            print "Purchase IBM computer: %d" %(num)
+            realNum = num
+            print "Purchase IBM computer: %d" %realNum
         else:
-            print "Purchase IBM computer: %d" %(num/2)
+            realNum = num / 2
+            print "Purchase IBM computer: %d" %realNum
+        self._stock.increase(realNum)
 
     def _sellComputer(self, num):
         if self._stock.getStockNumber() < num:
@@ -86,6 +90,7 @@ class Stock(AbstractColleague):
     def increase(self, num):
         Stock.COMPUTER_NUMBER = Stock.COMPUTER_NUMBER + num
         print "Computer number in stock: %d" %Stock.COMPUTER_NUMBER
+
     def decrease(self, num):
         Stock.COMPUTER_NUMBER = Stock.COMPUTER_NUMBER - num
         print "Computer number in stock: %d" %Stock.COMPUTER_NUMBER
@@ -102,8 +107,8 @@ class Sale(AbstractColleague):
         super(Sale, self).__init__(mediator)
 
     def sellIBMComputer(self, num):
-        self._mediator.execute("sale.sell", num)
         print "Sell IBM computer: %d" %num
+        self._mediator.execute("sale.sell", num)
 
     def getSaleStatus(self):
         saleStatus = random.randint(0, 100)
