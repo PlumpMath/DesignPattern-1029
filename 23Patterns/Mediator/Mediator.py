@@ -22,7 +22,7 @@ class AbstractMediator(object):
         self._stock    = Stock(self)
 
     @abstractmethod
-    def execute(self, op, objects):
+    def execute(self, op, args):
         pass
 
 class Mediator(AbstractMediator):
