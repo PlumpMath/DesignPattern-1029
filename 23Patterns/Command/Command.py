@@ -122,6 +122,8 @@ class AddRequirementCommand(Command):
     def execute(self):
         self._rg.find()
         self._rg.add()
+        self._pg.add()
+        self._cg.add()
         self._rg.plan()
 
 class DeletePageCommand(Command):
